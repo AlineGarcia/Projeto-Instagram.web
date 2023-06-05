@@ -1,18 +1,17 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <menu-vertical/>
+  <v-main style="height: 250px">
+    <router-view/>
+  </v-main>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import { defineComponent } from 'vue';
+import MenuVertical from '../components/commons/MenuVertical.vue'
+export default defineComponent({
 
-export default {
-  name: 'HomeView',
   components: {
-    HelloWorld
-  }
-}
+    MenuVertical,
+  },
+});
 </script>
