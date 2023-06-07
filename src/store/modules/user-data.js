@@ -3,13 +3,20 @@ import axios from 'axios'
 const urlBase = 'https://localhost:44330/api'
 
 const state = {
-    perfil: {}
+    perfil: {},
+    usuario: {}
 }
 
 const mutations = {
     atualizarPerfil: (state, obj) => {
         state.perfil = obj
-    }
+    },
+
+    atualizarUsuario: (state) => {
+        let userData = sessionStorage.getItem('userData')
+        state.usuario = JSON.parse(userData)
+    },
+
 }
 
 const actions = {

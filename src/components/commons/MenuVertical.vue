@@ -2,11 +2,10 @@
     <v-navigation-drawer
         @click="openPerfils = []"
         permanent
-        theme="dark"
     >   <h1 class="fonte-logo mt-6 mb-4 text-center">Linstagram</h1>
         <v-list v-model:opened="openPerfils" class="nav-list-menu" nav>
-          <v-list-item class="inbox" prepend-icon="fa-solid fa-house" title="Página Inicial" value="inbox"></v-list-item>
-          <v-list-item class="supervisors" prepend-icon="fa-solid fa-magnifying-glass" title="Pesquisa" value="supervisors"></v-list-item>
+          <v-list-item @click="$router.push('/pagina-inicial')" class="inbox" prepend-icon="fa-solid fa-house" title="Página Inicial" value="inbox"></v-list-item>  
+          <ButtonPesquisa><v-list-item class="supervisors" prepend-icon="fa-solid fa-magnifying-glass" title="Pesquisa" value="supervisors"></v-list-item></ButtonPesquisa>
           <v-list-item class="explorar" prepend-icon="fa-solid fa-compass" title="Explorar" value="explorar"></v-list-item>
           <v-list-item class="mensagem" prepend-icon="fa-regular fa-comment-dots" title="Mensagens" value="mensagem"></v-list-item>
           <v-list-item class="notificacao" prepend-icon="fa-regular fa-heart" title="Notificações" value="notificacao"></v-list-item>
@@ -69,28 +68,38 @@
 <script>
 import axios from 'axios'
 import ButtonMaisVue from '../ButtonMais.vue'
+import ButtonPesquisa from '../ButtonPesquisa.vue'
 export default {
   data: () => ({
     perfils: [],
     openPerfils: [],
-    rail: null
+    rail: null,
   }),
 
   components: {
-    ButtonMaisVue
+    ButtonMaisVue,
+    ButtonPesquisa
   },
 
   beforeMount() {
+    
+  },
+
+  mounted() {
     this.listarPerfils()
   },
 
   methods: {
     listarPerfils() {
-      axios.get(`https://localhost:44330/api/perfil/obter-perfils/BD4091F5-F8F0-4C08-88BF-440A146945A5`)
+      axios.get(`https://localhost:44330/api/perfil/obter-perfils/${this.$store.state.userData.usuario.id}`)
       .then(resp => {
         console.log('resposta ====>', resp)
-        this.perfils = resp.data
-        this.$store.commit('userData/atualizarPerfil', resp.data[0])
+        if (resp.data.length < 1) {
+          this.$router.push('/gerenciar-perfil')
+        } else {
+          this.perfils = resp.data
+          this.$store.commit('userData/atualizarPerfil', resp.data[0])
+        }
       })
     },
 
@@ -102,7 +111,7 @@ export default {
         this.openPerfils = []
         this.$router.push('/perfil')
       })
-    }
+    },
   }
 }
 </script>
@@ -114,18 +123,18 @@ export default {
   font-size: 2.100rem;
 }
 
-.nav-list-menu i.fas.fa-chevron-down.v-icon.notranslate.v-theme--dark.v-icon--size-default {
+.nav-list-menu i.fas.fa-chevron-down.v-icon.notranslate.v-icon--size-default {
   font-size: 14px;
 }
 
-/* .nav-list-menu i.fa-regular.fa-square-plus.v-icon.notranslate.v-theme--dark.v-icon--size-default:hover {
+/* .nav-list-menu i.fa-regular.fa-square-plus.v-icon.notranslate.v-icon--size-default:hover {
   font-size: 28px !important;
 } */
 
-nav.v-navigation-drawer.v-navigation-drawer--left.v-navigation-drawer--active.v-theme--dark .inbox:hover { font-size: 18px !important; }
-nav.v-navigation-drawer.v-navigation-drawer--left.v-navigation-drawer--active.v-theme--dark .supervisors:hover { font-size: 18px !important; }
-nav.v-navigation-drawer.v-navigation-drawer--left.v-navigation-drawer--active.v-theme--dark .explorar:hover { font-size: 18px !important; }
-nav.v-navigation-drawer.v-navigation-drawer--left.v-navigation-drawer--active.v-theme--dark .mensagem:hover { font-size: 18px !important; }
-nav.v-navigation-drawer.v-navigation-drawer--left.v-navigation-drawer--active.v-theme--dark .notificacao:hover { font-size: 18px !important; }
-nav.v-navigation-drawer.v-navigation-drawer--left.v-navigation-drawer--active.v-theme--dark .criar:hover { font-size: 18px !important; }
+nav.v-navigation-drawer.v-navigation-drawer--left.v-navigation-drawer--active .inbox:hover { font-size: 18px !important; }
+nav.v-navigation-drawer.v-navigation-drawer--left.v-navigation-drawer--active .supervisors:hover { font-size: 18px !important; }
+nav.v-navigation-drawer.v-navigation-drawer--left.v-navigation-drawer--active .explorar:hover { font-size: 18px !important; }
+nav.v-navigation-drawer.v-navigation-drawer--left.v-navigation-drawer--active .mensagem:hover { font-size: 18px !important; }
+nav.v-navigation-drawer.v-navigation-drawer--left.v-navigation-drawer--active .notificacao:hover { font-size: 18px !important; }
+nav.v-navigation-drawer.v-navigation-drawer--left.v-navigation-drawer--active .criar:hover { font-size: 18px !important; }
 </style>

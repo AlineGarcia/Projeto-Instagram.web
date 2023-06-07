@@ -9,7 +9,7 @@ import { aliases, fa} from 'vuetify/lib/iconsets/fa'
 import { mdi } from 'vuetify/lib/iconsets/mdi'
 
 const myCustomLightTheme = {
-  dark: true,
+  dark: false,
   colors: {
   }
 }

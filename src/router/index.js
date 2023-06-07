@@ -19,6 +19,11 @@ const routes = [
         path: '/gerenciar-perfil',
         name: 'gerenciar',
         component: () => import('../views/GerenciarPerfil.vue')
+      },
+      {
+        path: '/pagina-inicial',
+        name: 'PaginaInicial',
+        component: () => import('../views/PaginaInicial.vue')
       }
     ]
   },

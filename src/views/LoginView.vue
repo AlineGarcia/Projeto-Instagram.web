@@ -76,7 +76,8 @@ export default {
             axios.get(`https://localhost:44330/api/Usuario/logar?email=${formData.email}&senha=${formData.senha}`)
             .then(resp => {
                 sessionStorage.setItem('userData', JSON.stringify(resp.data))
-                this.$router.push('/gerenciar-perfil')
+                this.$store.commit('userData/atualizarUsuario')
+                this.$router.push('/perfil')
             })
         }
     }

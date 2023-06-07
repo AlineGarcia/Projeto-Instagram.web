@@ -77,6 +77,7 @@ export default {
 
       cadastrarPerfil(formData) {
           console.log('teste do perfil cadastrar =>', formData)
+          formData.usuarioId = this.$store.state.userData.usuario.id
           axios.post(`https://localhost:44330/api/Perfil/cadastrar`, formData)
           .then(resp => {
             console.log('resposta ====>', resp.data)
