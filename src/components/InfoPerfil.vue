@@ -12,8 +12,8 @@
             <div class="d-flex">
                 <h3 class="my-auto">{{perfil.nomeUsuario}}</h3>
                 <v-spacer></v-spacer>
-                <v-btn class="mr-6" variant="outlined">Editar Perfil</v-btn>
-                <i class="fa-solid fa-gear ma-auto"></i>
+                <v-btn v-if="show" class="mr-6" variant="outlined">Editar Perfil</v-btn>
+                <i v-if="show" class="fa-solid fa-gear ma-auto"></i>
                 <v-spacer></v-spacer>
             </div>
 
@@ -34,7 +34,8 @@
 
 export default {
     props: {
-        perfil: Object
+        perfil: Object,
+        show: Boolean
     }
 }
 </script>

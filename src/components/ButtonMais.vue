@@ -68,7 +68,7 @@ data: () => ({
     methods: {
       deslogar() {
         sessionStorage.clear()
-        this.$router.push('/login')
+        this.$router.push('/')
       },
 
       send(tipo) {

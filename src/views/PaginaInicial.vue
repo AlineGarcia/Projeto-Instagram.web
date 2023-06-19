@@ -11,9 +11,9 @@
             <v-avatar
                 size="35"
                 class="mr-4"
-                :image="$store.state.userData.perfil.foto"
+                :image="$store.state.userData.listaPerfils.find(el => el.id == item.perfilId).foto"
             ></v-avatar>
-            <span>Qaulquer mer</span>
+            <span>{{$store.state.userData.listaPerfils.find(el => el.id == item.perfilId).nomeUsuario}}</span>
         </div>
 
         <v-spacer></v-spacer>

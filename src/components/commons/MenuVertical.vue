@@ -1,13 +1,15 @@
 <template>
     <v-navigation-drawer
         @click="openPerfils = []"
+        v-model="drawer"
+        :rail="rail"
         permanent
     >   <h1 class="fonte-logo mt-6 mb-4 text-center">Linstagram</h1>
         <v-list v-model:opened="openPerfils" class="nav-list-menu" nav>
           <v-list-item @click="$router.push('/pagina-inicial')" class="inbox" prepend-icon="fa-solid fa-house" title="Página Inicial" value="inbox"></v-list-item>  
-          <ButtonPesquisa><v-list-item class="supervisors" prepend-icon="fa-solid fa-magnifying-glass" title="Pesquisa" value="supervisors"></v-list-item></ButtonPesquisa>
+          <v-list-item @click="rail = !rail; showPesquisa(rail)" class="supervisors" prepend-icon="fa-solid fa-magnifying-glass" title="Pesquisa" value="supervisors"></v-list-item>
           <v-list-item class="explorar" prepend-icon="fa-solid fa-compass" title="Explorar" value="explorar"></v-list-item>
-          <v-list-item class="mensagem" prepend-icon="fa-regular fa-comment-dots" title="Mensagens" value="mensagem"></v-list-item>
+          <v-list-item @click="rail = !rail; showPesquisa(rail)" class="mensagem" prepend-icon="fa-regular fa-comment-dots" title="Mensagens" value="mensagem"></v-list-item>
           <v-list-item class="notificacao" prepend-icon="fa-regular fa-heart" title="Notificações" value="notificacao"></v-list-item>
           <v-list-item class="criar" :active="$store.state.showCriar" active-color="primary" prepend-icon="fa-regular fa-square-plus" title="Criar" @click="$store.state.showCriar = true" value="criar"></v-list-item>
           <v-list-group value="Actions">
@@ -63,6 +65,8 @@
           </div>
         </template>
     </v-navigation-drawer>
+    
+    <button-pesquisa v-if="rail" :send="selecionarPerfilUsuario"/>
 </template>
 
 <script>
@@ -70,15 +74,20 @@ import axios from 'axios'
 import ButtonMaisVue from '../ButtonMais.vue'
 import ButtonPesquisa from '../ButtonPesquisa.vue'
 export default {
+  props: {
+    showPesquisa: Function
+  },
+
   data: () => ({
     perfils: [],
     openPerfils: [],
-    rail: null,
+    rail: false,
+    drawer: true
   }),
 
   components: {
     ButtonMaisVue,
-    ButtonPesquisa
+    ButtonPesquisa,
   },
 
   beforeMount() {
@@ -112,6 +121,16 @@ export default {
         this.$router.push('/perfil')
       })
     },
+
+    selecionarPerfilUsuario(item) {
+      this.$store.dispatch('userData/obterPerfil', item)
+      .then(resp => {
+        console.log(resp)
+        this.$store.state.userData.perfilUsuario = resp
+        this.openPerfils = []
+        this.$router.push('/perfil')
+      })
+    }
   }
 }
 </script>

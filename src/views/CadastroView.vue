@@ -92,7 +92,7 @@ export default {
                 axios.post('https://localhost:44330/api/Usuario/cadastrar', formData)
                 .then(resp => {
                     console.log('resposta', resp.data)
-                    this.$router.push('/login')
+                    this.$router.push('/')
                 })
         }
     }

@@ -1,6 +1,6 @@
 <template>
   <v-container class="pt-15" style="max-width: 900px;">
-    <info-perfil :perfil="perfil"/>
+    <info-perfil :perfil="perfilUsuario?? perfil" :show="perfilUsuario == null"/>
     
     <v-divider class="mt-10"></v-divider>
 
@@ -49,12 +49,18 @@ export default {
   computed: {
     ...mapState({
       perfil: (state) => state.userData.perfil,
+      perfilUsuario: (state) => state.userData.perfilUsuario,
       modal: (state) => state.showCriar
     })
   },
 
   watch: {
     perfil(item) {
+      console.log('otima ideia', item)
+      this.obterPublicacoes(item.id)
+    },
+
+    perfilUsuario(item) {
       console.log('otima ideia', item)
       this.obterPublicacoes(item.id)
     },

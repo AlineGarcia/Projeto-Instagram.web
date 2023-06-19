@@ -4,7 +4,9 @@ const urlBase = 'https://localhost:44330/api'
 
 const state = {
     perfil: {},
-    usuario: {}
+    usuario: {},
+    perfilUsuario: null,
+    listaPerfils: []
 }
 
 const mutations = {
